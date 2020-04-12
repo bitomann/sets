@@ -44,8 +44,10 @@ available_car_colors = (
 # Part 1: Reporting Object
 #       You must first build a new dictionary that follows the format below.
 
-# 1. Each key in the dictionary should be the name of a make, and its value will be a dictionary.
-# 2. The keys in the make dictionary will be the models, and the value will be a list of colors in which that the model is available.
+# 1. Each key in the dictionary should be the name of a make, and its value 
+# will be a dictionary.
+# 2. The keys in the make dictionary will be the models, and the value will be 
+# a list of colors in which that the model is available.
 
 {
     'Toyota': {
@@ -87,3 +89,30 @@ available_car_colors = (
 # Thunderbird available in Black, Red, White
 
 # etc...
+
+report = {
+    make.upper(): {
+        model: [
+            color.lower()
+            for model_id, color_id in available_car_colors
+            if model_id == model_index
+            for color_index, color in colors
+            if color_index == color_id
+        ]
+        for model_index, model, make_id in models
+        if make_index == make_id
+    }
+    for make_index, make in makes
+}
+# vvv \n is what you do when you go to next line i.e ‘Enter Key’ vvv
+output_report = "\n\n\n".join(
+    f"\n{make}\n-------------------------------"
+    + "\n\n".join(
+        [
+            f"{model}: is available in " + ", ".join(colors)
+            for model, colors in makeDetails.items()
+        ]
+    )
+    for make, makeDetails in report.items()
+)
+print(output_report)
